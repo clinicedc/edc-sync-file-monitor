@@ -1,0 +1,95 @@
+{% extends 'edc_base/base.html' %}
+{% load staticfiles %}
+
+{% block extra-scripts %}
+{% endblock extra-scripts %}
+{% block main %}
+
+<style>
+
+.bg-1 {
+    background-color: #428bca; /* dark blue */
+    color: #ffffff;
+}
+.bg-2 {
+    background-color: #5bc0de; /* light Blue */
+    color: #ffffff;
+}
+.bg-3 {
+    background-color: #f9f9f9; /* White */
+    color: #555555;
+}
+
+</style>
+
+    {{ block.super }}
+<div class="container bg-3 text-center">
+ 	<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Registered Remote Machines File Statistics</h1>
+                    <a role="button" title="add client" class="btn btn-sm btn-default" href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_add' %}">
+                    	Add Client
+                    </a>
+                    <hr>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            {% if not report_data %}
+            	<div class="alert alert-warning">
+				  <strong>Warning!</strong> No Clients being monitored. Add a client on the add link above.
+				</div>
+            {% endif %}
+            {% for key, clients in report_data.items %}
+            <div class="row">
+            	{% for client in clients %}
+                <div class="col-lg-4">
+                    <div {% if not client.active %}
+                    		class= "panel panel-default"
+                    	{% elif not client.has_files and client.ping_remote_client %} 
+                    		class= "panel panel-success"
+                    	{% elif client.has_files %} 
+                    		class= "panel panel-warning"
+                    	{% elif not client.ping_remote_client %} 
+                    		class= "panel panel-danger"
+                    	{% endif %}>
+                        <div class="panel-heading">
+                            Server: {{ client.sftp_url }} Account: {{ client.sftp_user }}
+                        </div>
+                        <div class="panel-body">
+                        	<a href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_change' client.id %}?">
+		                    	Update Client
+		                    </a>
+                       		{% if client.ping_remote_client %}
+								  <p>Host is Up</p>            			
+                       		{% else %}
+							  	<p>Host is Down</p>
+                       		{% endif %}
+                        	{% if client.has_files %}
+                        		<p><b>Pending Files</b></p>
+                        	{% elif client.ping_remote_client %}
+                        		<p><b>No Pending Files</b></p>
+                        	{% endif %}
+	                        <ul>
+	                        	{% for file in client.remote_files %}
+	                        		<li>{{ file }}</li>
+	                        	{% endfor %}
+                        	</ul>
+                        </div>
+                        <div class="panel-footer">
+                            Client: {% if client.active %} enabled {% else %} disabled {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- /.col-lg-4 -->
+            </div>
+            {% endfor %}
+    <!-- /#wrapper -->
+	</div>
+</div>
+
+
+{% endblock main %}

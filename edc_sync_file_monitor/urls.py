@@ -1,4 +1,4 @@
-"""edc_filemanager URL Configuration
+"""edc_sync_file_monitor URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,15 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.conf.urls import url, include
 from edc_base.views import LogoutView, LoginView
 
-from .admin_site import edc_filemanager_admin
+from .admin_site import edc_sync_file_monitor_admin
 from .views import HomeView
 
 
+app_name = 'edc_sync_file_monitor'
+
+admin.autodiscover()
+
+
 urlpatterns = [
-    url(r'^admin/', edc_filemanager_admin.urls),
+    url(r'^admin/', admin.site.urls),
+    url(r'^edc_filemanager_admin/', edc_sync_file_monitor_admin.urls),
     url(r'^edc/', include('edc_base.urls')),
     url(r'login', LoginView.as_view(), name='login_url'),
     url(r'^tz_detect/', include('tz_detect.urls')),

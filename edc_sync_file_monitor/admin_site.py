@@ -5,7 +5,7 @@ class AdminSite(DjangoAdminSite):
     site_title = 'EDC Filemanager'
     site_header = 'EDC Filemanager'
     index_title = 'EDC Filemanager'
-    site_url = '/edc_filemanager/list/'
+    site_url = '/edc_sync_file_monitor/list/'
 
 
-edc_filemanager_admin = AdminSite(name='edc_filemanager_admin')
+edc_sync_file_monitor_admin = AdminSite(name='edc_sync_file_monitor_admin')
