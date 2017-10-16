@@ -76,3 +76,12 @@ The `paramiko` package is used to connect to remote machines and list files on a
 		    class Meta:
 		        abstract = True
 
+A report lie the diagram below will show a list of machine and the status for files and connectivity.
+
+![Alt text](report.png?raw=true "Optional Title")
+
+
+==A lot can still be improved on this module in terms of speed to return the starts and better approach to get the starts.
+
+If the color is green for a panel there are no issue if yellow then there are pending files and red means no connection, lastly default grey color means site is disabled.
+
