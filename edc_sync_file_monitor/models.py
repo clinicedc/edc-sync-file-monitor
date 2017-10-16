@@ -31,8 +31,13 @@ class Client(ClientModelMixin, BaseUuidModel):
         max_length=250,
         null=True)
 
+    protocol = models.CharField(
+        verbose_name="Protocol Name",
+        max_length=250,
+        null=True)
+
     def __str__(self):
-        return self.sftp_url
+        return f'{self.sftp_url} {self.protocol}'
 
     class Meta:
         app_label = 'edc_sync_file_monitor'

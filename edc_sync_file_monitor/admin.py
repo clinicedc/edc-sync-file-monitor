@@ -31,7 +31,8 @@ class ClientAdmin(ModelAdminNextUrlRedirectMixin,
                 'sftp_user',
                 'sftp_pass',
                 'active',
-                'remote_dirname')}),
+                'remote_dirname',
+                'protocol')}),
         audit_fieldset_tuple)
 
     radio_fields = {
