@@ -55,7 +55,7 @@
                     		class= "panel panel-danger"
                     	{% endif %}>
                         <div class="panel-heading">
-                            Server:{{self.protocol}} {{ client.sftp_url }} Account: {{ client.sftp_user }}
+                            Server:{{ client.protocol }} {{ client.sftp_url }} Account: {{ client.sftp_user }}
                         </div>
                         <div class="panel-body">
                         	<a href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_change' client.id %}?">
