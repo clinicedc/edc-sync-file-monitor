@@ -20,6 +20,7 @@ class ClientModelMixin(models.Model):
             if self.remote_dirname:
                 ftp.chdir(self.remote_dirname)
             files = ftp.listdir()
+            files = [file for file in files if file.endswith('.json')]
             ftp.close()
         return files
 
