@@ -1,5 +1,10 @@
 import os
 import paramiko
+import socket
+
+from paramiko.ssh_exception import (
+    BadHostKeyException, AuthenticationException, SSHException)
+
 
 from django.db import models
 
@@ -14,14 +19,20 @@ class ClientModelMixin(models.Model):
         if self.ping and self.active:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(
-                self.sftp_url, username=self.sftp_user, password=self.sftp_pass)
-            ftp = ssh.open_sftp()
-            if self.remote_dirname:
-                ftp.chdir(self.remote_dirname)
-            files = ftp.listdir()
-            files = [file for file in files if file.endswith('.json')]
-            ftp.close()
+            try:
+                ssh.connect(
+                    self.sftp_url, username=self.sftp_user, password=self.sftp_pass)
+            except (ConnectionRefusedError, socket.timeout, socket.gaierror,
+                    AuthenticationException, BadHostKeyException, ConnectionResetError,
+                    SSHException, OSError) as e:
+                files.append(e)
+            else:
+                ftp = ssh.open_sftp()
+                if self.remote_dirname:
+                    ftp.chdir(self.remote_dirname)
+                files = ftp.listdir()
+                files = [file for file in files if file.endswith('.json')]
+                ftp.close()
         return files
 
     @property
