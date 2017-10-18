@@ -28,7 +28,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^edc_filemanager_admin/', edc_sync_file_monitor_admin.urls),
+    url(r'^file_monitor_admin/', edc_sync_file_monitor_admin.urls),
     url(r'^edc/', include('edc_base.urls')),
     url(r'login', LoginView.as_view(), name='login_url'),
     url(r'^tz_detect/', include('tz_detect.urls')),
