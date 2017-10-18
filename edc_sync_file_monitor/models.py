@@ -26,6 +26,9 @@ class Client(ClientModelMixin, BaseUuidModel):
     has_files = models.BooleanField(
         default=False)
 
+    ping = models.BooleanField(
+        default=False)
+
     remote_dirname = models.CharField(
         verbose_name="Client monitored directory",
         max_length=250,

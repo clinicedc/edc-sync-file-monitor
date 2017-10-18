@@ -12,14 +12,6 @@ class SiteMonitoringStartView:
             return True
         return False
 
-    def update_file_status(self):
-        for client in self.clients:
-            if client.active:
-                client.has_files = True if client.remote_files else False
-            else:
-                client.has_files = False
-            client.save()
-
     @property
     def report_data(self):
         report_data = {}
@@ -27,6 +19,13 @@ class SiteMonitoringStartView:
         count = 1
         clients_list = []
         for client in self.clients:
+            if client.active:
+                client.ping = True if client.ping_remote_client else False
+                client.save()
+                client.has_files = True if client.remote_files else False
+            else:
+                client.has_files = False
+            client.save()
             clients_list.append(client)
             if total_clients < 3:
                 report_data['less_3'] = self.clients
@@ -42,7 +41,6 @@ class SiteMonitoringStartView:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.update_file_status()
         context.update(
             report_data=self.report_data,)
         return context

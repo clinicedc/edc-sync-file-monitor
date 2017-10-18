@@ -11,7 +11,7 @@ class ClientModelMixin(models.Model):
         """Returns a list of remote files for a given directory.
         """
         files = []
-        if self.ping_remote_client:
+        if self.ping and self.active:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(
@@ -28,7 +28,9 @@ class ClientModelMixin(models.Model):
     def ping_remote_client(self):
         """Return True if remote machine is up.
         """
-        return True if os.system("ping -c 1 " + self.sftp_url) is 0 else False
+        if self.active:
+            return True if os.system("ping -c 1 " + self.sftp_url) is 0 else False
+        return False
 
     class Meta:
         abstract = True

@@ -47,11 +47,11 @@
                 <div class="col-lg-4">
                     <div {% if not client.active %}
                     		class= "panel panel-default"
-                    	{% elif not client.has_files and client.ping_remote_client %} 
+                    	{% elif not client.has_files and client.ping %} 
                     		class= "panel panel-success"
                     	{% elif client.has_files %} 
                     		class= "panel panel-warning"
-                    	{% elif not client.ping_remote_client %} 
+                    	{% elif not client.ping %} 
                     		class= "panel panel-danger"
                     	{% endif %}>
                         <div class="panel-heading">
@@ -61,14 +61,14 @@
                         	<a href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_change' client.id %}?">
 		                    	Update Client
 		                    </a>
-                       		{% if client.ping_remote_client %}
+                       		{% if client.ping %}
 								  <p>Host is Up</p>            			
                        		{% else %}
 							  	<p>Host is Down</p>
                        		{% endif %}
                         	{% if client.has_files %}
                         		<p><b>Pending Files</b></p>
-                        	{% elif client.ping_remote_client %}
+                        	{% elif client.ping %}
                         		<p><b>No Pending Files</b></p>
                         	{% endif %}
 	                        <ul>
