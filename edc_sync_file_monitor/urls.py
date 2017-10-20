@@ -18,7 +18,7 @@ from django.conf.urls import url, include
 from edc_base.views import LogoutView, LoginView
 
 from .admin_site import edc_sync_file_monitor_admin
-from .views import HomeView
+from .views import ReportView
 
 
 app_name = 'edc_sync_file_monitor'
@@ -34,5 +34,5 @@ urlpatterns = [
     url(r'^tz_detect/', include('tz_detect.urls')),
     url(r'logout', LogoutView.as_view(
         pattern_name='login_url'), name='logout_url'),
-    url(r'', HomeView.as_view(), name='home_url'),
+    url(r'', ReportView.as_view(), name='home_url'),
 ]

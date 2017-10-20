@@ -27,12 +27,13 @@ class ClientModelMixin(models.Model):
                     SSHException, OSError) as e:
                 files.append(e)
             else:
-                ftp = ssh.open_sftp()
-                if self.remote_dirname:
-                    ftp.chdir(self.remote_dirname)
-                files = ftp.listdir()
-                files = [file for file in files if file.endswith('.json')]
-                ftp.close()
+                _ftp = None
+                with ssh.open_sftp() as _ftp:
+                    if self.remote_dirname:
+                        _ftp.chdir(self.remote_dirname)
+                    files = _ftp.listdir()
+                    files = [file for file in files if file.endswith('.json')]
+#                     ftp.close()
         return files
 
     @property

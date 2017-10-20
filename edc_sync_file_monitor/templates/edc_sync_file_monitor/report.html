@@ -27,7 +27,7 @@
  	<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Registered Remote Machines File Statistics</h1>
+                    <h1 class="page-header">Remote File Monitor</h1>
                     <a role="button" title="add client" class="btn btn-sm btn-default" href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_add' %}">
                     	Add Client
                     </a>
@@ -55,17 +55,22 @@
                     		class= "panel panel-danger"
                     	{% endif %}>
                         <div class="panel-heading">
-                            Server:{{ client.protocol }} {{ client.sftp_url }} Account: {{ client.sftp_user }}
+                        		<a href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_change' client.id %}?">
+			                    	<span class="glyphicon glyphicon-pencil" title="Edit client"></span>
+			                    </a>
+                            	{{ client.sftp_url }} : 
+                            	{% if client.ping %}
+									  <span class="glyphicon glyphicon-upload text text-success" title="Host Up"></span>            			
+	                       		{% else %}
+								  	<span class="glyphicon glyphicon-download text text-danger" title="Host Down"></span>
+	                       		{% endif %}
+	                       		{% if client.active %}
+	                            	<span class="text text-success"><i class="fa fa-check-circle fa-lg" title="Site active"></i></span>
+	                            {% else %} 
+	                            	<span class="text text-danger"><i class="fa fa-times-circle fa-lg" title="Site inactive"></i></span>
+	                            {% endif %}
                         </div>
                         <div class="panel-body">
-                        	<a href="{% url 'edc_sync_file_monitor_admin:edc_sync_file_monitor_client_change' client.id %}?">
-		                    	Update Client
-		                    </a>
-                       		{% if client.ping %}
-								  <p>Host is Up</p>            			
-                       		{% else %}
-							  	<p>Host is Down</p>
-                       		{% endif %}
                         	{% if client.has_files %}
                         		<p><b>Pending Files</b></p>
                         	{% elif client.ping %}
@@ -78,7 +83,7 @@
                         	</ul>
                         </div>
                         <div class="panel-footer">
-                            Client: {% if client.active %} enabled {% else %} disabled {% endif %}
+                            
                         </div>
                     </div>
                 </div>

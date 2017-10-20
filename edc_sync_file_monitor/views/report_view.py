@@ -8,10 +8,10 @@ from edc_base.view_mixins import EdcBaseViewMixin
 from .site_monitoring_starts_view import SiteMonitoringStartView
 
 
-class HomeView(SiteMonitoringStartView, EdcBaseViewMixin, TemplateView):
+class ReportView(SiteMonitoringStartView, EdcBaseViewMixin, TemplateView):
 
     app_config_name = 'edc_sync_file_monitor'
-    template_name = 'edc_sync_file_monitor/home.html'
+    template_name = 'edc_sync_file_monitor/report.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
