@@ -8,8 +8,7 @@ class Client(ClientModelMixin, BaseUuidModel):
 
     sftp_url = models.CharField(
         verbose_name="SFTP Server url or IP Address",
-        max_length=250,
-        unique=True)
+        max_length=250)
 
     sftp_user = models.CharField(
         verbose_name="SFTP Username",
@@ -44,3 +43,5 @@ class Client(ClientModelMixin, BaseUuidModel):
 
     class Meta:
         app_label = 'edc_sync_file_monitor'
+        unique_together = (
+            ('sftp_url', 'remote_dirname'))

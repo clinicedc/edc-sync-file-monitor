@@ -1,0 +1,39 @@
+{% extends 'edc_base/base.html' %}
+{% load staticfiles %}
+
+{% block extra-scripts %}
+{% endblock extra-scripts %}
+{% block main %}
+
+<style>
+
+.bg-1 {
+    background-color: #428bca; /* dark blue */
+    color: #ffffff;
+}
+.bg-2 {
+    background-color: #5bc0de; /* light Blue */
+    color: #ffffff;
+}
+.bg-3 {
+    background-color: #f9f9f9; /* White */
+    color: #555555;
+}
+
+</style>
+
+    {{ block.super }}
+
+<div class="container bg-3 text-center">
+
+	<hr>
+	{% for site, site_value in protocol_sites.items %}
+		<a role="button" title="site" class="btn btn-sm btn-default" href="{% url 'report_url' site_value %}">
+			{{ site }}
+		</a>	
+	{% endfor %}
+
+</div>
+
+
+{% endblock main %}
