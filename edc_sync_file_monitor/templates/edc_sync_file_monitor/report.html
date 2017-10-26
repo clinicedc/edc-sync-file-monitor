@@ -72,7 +72,7 @@
                         </div>
                         <div class="panel-body">
                         	{% if client.has_files %}
-                        		<p><b>Pending Files</b></p>
+                        		<p><b>Pending Files</b>: {{ client.remote_dirname }}</p>
                         	{% elif client.ping %}
                         		<p><b>No Pending Files</b></p>
                         	{% endif %}
