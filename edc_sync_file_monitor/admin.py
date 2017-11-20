@@ -1,17 +1,14 @@
 from django.contrib import admin
-
-from .admin_site import edc_sync_file_monitor_admin
+from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
 from edc_base.modeladmin_mixins import audit_fieldset_tuple
-
-
-from edc_base.modeladmin_mixins import (
+from edc_model_admin import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
     ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin,
     ModelAdminReadOnlyMixin, ModelAdminInstitutionMixin)
-from django_revision.modeladmin_mixin import ModelAdminRevisionMixin
 
+
+from .admin_site import edc_sync_file_monitor_admin
 from .forms import ClientForm
-
 from .models import Client
 
 
