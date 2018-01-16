@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
-    'crispy_forms',
     'django_js_reverse',
     'tz_detect',
     'edc_base.apps.AppConfig',
