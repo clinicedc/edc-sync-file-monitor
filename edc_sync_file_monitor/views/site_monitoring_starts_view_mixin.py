@@ -1,27 +1,24 @@
 from django.apps import apps as django_apps
+from django.views.generic.base import ContextMixin
 
 from ..models import Client
 
 
-class SiteMonitoringStartView:
+class SiteMonitoringStartViewMixin(ContextMixin):
 
     app_config = django_apps.get_app_config('edc_sync_file_monitor')
-
-    def clients(self, site_value=None):
-        return Client.objects.filter(protocol=site_value)
+    client_model_cls = Client
 
     def is_divisible_by_3(self, number):
         if number % 3 == 0:
             return True
         return False
 
-    def report_data(self, site_value=None):
+    def report_data(self, protocol=None):
         report_data = {}
-        clients = self.clients(site_value=site_value)
-        total_clients = clients.count()
-        count = 1
+        clients = self.client_model_cls.objects.filter(protocol=protocol)
         clients_list = []
-        for client in clients:
+        for index, client in enumerate(clients):
             if client.active:
                 client.ping = True if client.ping_remote_client else False
                 client.save()
@@ -30,16 +27,15 @@ class SiteMonitoringStartView:
                 client.has_files = False
             client.save()
             clients_list.append(client)
-            if total_clients < 3:
+            if clients.count() < 3:
                 report_data['less_3'] = clients
                 return report_data
-            elif self.is_divisible_by_3(count):
-                report_data[count] = clients_list
+            elif self.is_divisible_by_3(index + 1):
+                report_data[index + 1] = clients_list
                 clients_list = []
-            elif not self.is_divisible_by_3(total_clients) and total_clients > 3:
-                if total_clients == count:
-                    report_data[count] = clients_list
-            count += 1
+            elif not self.is_divisible_by_3(clients.count()) and clients.count() > 3:
+                if clients.count() == index + 1:
+                    report_data[index + 1] = clients_list
         return report_data
 
     def get_context_data(self, **kwargs):
@@ -48,6 +44,6 @@ class SiteMonitoringStartView:
         site_key = list(self.app_config.protocol_sites.keys())[
             list(self.app_config.protocol_sites.values()).index(site_value)]
         context.update(
-            report_data=self.report_data(site_value=site_value),
+            report_data=self.report_data(protocol=site_value),
             site=site_key)
         return context

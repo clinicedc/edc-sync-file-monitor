@@ -31,6 +31,3 @@ class ClientAdmin(ModelAdminNextUrlRedirectMixin,
                 'remote_dirname',
                 'protocol')}),
         audit_fieldset_tuple)
-
-    radio_fields = {
-    }

@@ -14,7 +14,7 @@ setup(
     name='edc-sync-file-monitor',
     packages=find_packages(),
     include_package_data=True,
-    url='http://github.com/botswana-harvard/edc-sync-file-monitor',
+    url='http://github.com/clinicedc/edc-sync-file-monitor',
     license='GPL license, see LICENSE',
     description='Monitor clients that sync data, collected offline,  with a node by file',
     long_description=README,

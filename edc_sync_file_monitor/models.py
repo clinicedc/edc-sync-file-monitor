@@ -42,6 +42,4 @@ class Client(ClientModelMixin, BaseUuidModel):
         return f'{self.sftp_url} {self.protocol}'
 
     class Meta:
-        app_label = 'edc_sync_file_monitor'
-        unique_together = (
-            ('sftp_url', 'remote_dirname'))
+        unique_together = [('sftp_url', 'remote_dirname')]

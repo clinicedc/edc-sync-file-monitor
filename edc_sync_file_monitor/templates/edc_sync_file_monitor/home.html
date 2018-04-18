@@ -28,7 +28,7 @@
 
 	<hr>
 	{% for site, site_value in protocol_sites.items %}
-		<a role="button" title="site" class="btn btn-sm btn-default" href="{% url 'report_url' site_value %}">
+		<a role="button" title="site" class="btn btn-sm btn-default" href="{% url 'file_monitor_report_url' site_value %}">
 			{{ site }}
 		</a>	
 	{% endfor %}
